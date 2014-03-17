@@ -12,7 +12,7 @@ import java.util.*;
 public class GameController {
     Queue<Pipe> comingPipesQueue;
     Map<Integer, Pipe> placedPipesMap;
-    int gameStatus;
+    public int gameStatus;
 
     public GameController(){
 
@@ -103,52 +103,52 @@ public class GameController {
 
     public void checkMapForConnected() {
         Pipe startP = placedPipesMap.get(Constants.GAME_COL_NUMBER/2);
-
         check(startP);
 
     }
 
     public void checkLeft(Pipe left){
-        if(left != null){
+        if(left != null && !left.isConnected()){
             if (left.getType() == 1 || left.getType() == 3
                     || left.getType() == 4 || left.getType() == 6
-                    || left.getType() == 8 || left.getType() == 11) {
+                    || left.getType() == 8 || left.getType() == 9
+                    || left.getType() == 11) {
                 left.setConnected(true);
+                check(left);
             }
-            check(left);
         }
     }
     public void checkRight(Pipe right){
-        if(right != null){
+        if(right != null && !right.isConnected()){
             if (right.getType() == 1 || right.getType() == 3
                     || right.getType() == 5 || right.getType() == 7
                     || right.getType() == 9 || right.getType() == 10
                     || right.getType() == 11) {
                 right.setConnected(true);
+                check(right);
             }
-            check(right);
         }
     }
     public void checkUp(Pipe up){
-        if(up != null){
+        if(up != null && !up.isConnected()){
             if(up.getType() == 2 ||up.getType() == 3
                     ||up.getType() == 4 ||up.getType() == 5
                     ||up.getType() == 8 ||up.getType() == 9
                     ||up.getType() == 10 ){
                 up.setConnected(true);
+                check(up);
             }
-            check(up);
         }
     }
     public void checkBottom(Pipe bottom){
-        if(bottom != null){
+        if(bottom != null && !bottom.isConnected()){
             if(bottom.getType() == 2 ||bottom.getType() == 3
                     ||bottom.getType() == 6 ||bottom.getType() == 7
                     ||bottom.getType() == 8 ||bottom.getType() == 10
                     ||bottom.getType() == 11){
                 bottom.setConnected(true);
+                check(bottom);
             }
-            check(bottom);
         }
     }
     /** 11 types:
@@ -156,9 +156,13 @@ public class GameController {
      *  1 2 3 4 5 6 7 8 9 10 11
      */
     public void check(Pipe p) {
-        if(p == null && p.isConnected()){
+        if(p == null){
             return;
         }
+        if(p.getPosition().x == Constants.GAME_COL_NUMBER/2 && p.getPosition().y == 0){
+            p.setConnected(true);
+        }
+
         Pipe right = placedPipesMap.get(p.getPosition().y*10 + p.getPosition().x+1);
         Pipe left = placedPipesMap.get(p.getPosition().y*10 + p.getPosition().x-1);
         Pipe bottom = placedPipesMap.get((p.getPosition().y+1)*10 + p.getPosition().x);
@@ -228,10 +232,22 @@ public class GameController {
         gc.placePipe(0,2);
         gc.placePipe(0,3);
         gc.placePipe(0,4);
-        gc.placePipe(0,5);
-        gc.placePipe(0,6);
-        gc.placePipe(0,7);
+        gc.placePipe(1,1);
+        gc.placePipe(1,2);
+        gc.placePipe(1,3);
+        gc.placePipe(1,4);
+        gc.placePipe(1,0);
+        gc.placePipe(2,1);
+        gc.placePipe(2,2);
+        gc.placePipe(2,3);
+        gc.placePipe(2,4);
+        gc.placePipe(2,0);
+        gc.placePipe(3,1);
+        gc.placePipe(3,2);
+        gc.placePipe(3,3);
+        gc.placePipe(3,4);
+        gc.placePipe(3,0);
         gc.checkGameStatus();
-
+        System.out.println(""+ gc.getCurrentPipe());
     }
 }

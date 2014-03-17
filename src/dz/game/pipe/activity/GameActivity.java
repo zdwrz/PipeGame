@@ -44,6 +44,7 @@ public class GameActivity extends Activity {
             @Override
             public void onFinish() {
                 tv.setText("Time's Up!");
+                gameControl.gameStatus = Constants.STATUS_DEAD;
                 gameControl.checkGameStatus();
                 updateScreenToFinish();
             }
@@ -99,7 +100,7 @@ public class GameActivity extends Activity {
         public void onClick(View v) {
             ImageView iv = (ImageView)v;
             Pipe currentPipe = gameControl.getCurrentPipe();
-            if(currentPipe != null){
+            if(currentPipe != null && gameControl.gameStatus == Constants.STATUS_PENDING){
                 int desc = Integer.parseInt(iv.getContentDescription().toString());
                 if(gameControl.placePipe(desc/10, desc%10)){
                     int resID = getResources().getIdentifier("dz.game.pipe:drawable/img_pipe_" + currentPipe.getType(), null, null);
