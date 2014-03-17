@@ -3,10 +3,10 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-        >
+              android:weightSum="1" android:background="#82ff5f">
     <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="50dp">
 
         <Button
                 android:layout_width="wrap_content"
@@ -19,12 +19,44 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/timer_start_point_text"
-                android:id="@+id/timer_text" android:layout_centerVertical="true" android:layout_centerHorizontal="true"/>
+                android:id="@+id/timer_text"
+                android:layout_centerVertical="true" android:layout_toRightOf="@+id/return_button"
+                android:textColor="#ea4eff" android:textSize="20dp" android:textIsSelectable="false"
+                android:textStyle="bold"/>
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/preview_3" android:layout_toRightOf="@+id/timer_text"
+                android:layout_alignBottom="@+id/return_button"
+                android:layout_alignTop="@+id/return_button" />
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/preview_2" android:layout_toRightOf="@+id/preview_3"
+                android:layout_alignBottom="@+id/return_button"
+                android:layout_alignTop="@+id/return_button" />
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/preview_1" android:layout_alignBottom="@+id/return_button"
+                android:layout_alignTop="@+id/return_button" android:layout_toRightOf="@+id/preview_2"/>
 
     </RelativeLayout>
-
-    <RelativeLayout
+    <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-    </RelativeLayout>
+            android:layout_height="match_parent" android:layout_weight="1">
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/img_start_point" android:layout_gravity="center_horizontal"
+                android:maxWidth="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/img_start_point"/>
+        <TableLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:id="@+id/game_area_table_id" android:layout_weight="1">
+
+        </TableLayout>
+    </LinearLayout>
+
 </LinearLayout>

@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.Game001"
+          package="dz.game.pipe"
           android:versionCode="1"
           android:versionName="1.0">
     <uses-sdk android:minSdkVersion="19"/>
-    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher" android:debuggable="true" android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen">
+    <application android:label="@string/app_name"
+                 android:icon="@drawable/ic_launcher"
+                 android:debuggable="true"
+                 android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"
+                 android:permission="android.permission.INTERACT_ACROSS_USERS_FULL">
         <activity android:name="dz.game.pipe.activity.MyActivity"
                   android:label="@string/app_name">
             <intent-filter>

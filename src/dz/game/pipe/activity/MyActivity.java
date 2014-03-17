@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import com.example.Game001.R;
+import dz.game.pipe.R;
 
 public class MyActivity extends Activity {
     /**
