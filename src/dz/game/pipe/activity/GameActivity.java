@@ -2,16 +2,14 @@ package dz.game.pipe.activity;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.view.Display;
 import android.view.View;
 import android.widget.*;
 import dz.game.pipe.R;
 import dz.game.pipe.controller.GameController;
 import dz.game.pipe.model.Pipe;
+import dz.game.pipe.model.Point;
 import dz.game.pipe.util.Constants;
 import dz.game.pipe.util.GameUtil;
 

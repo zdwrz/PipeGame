@@ -1,6 +1,5 @@
 package dz.game.pipe.model;
 
-import android.graphics.Point;
 
 /**
  * Created by Dawei on 3/16/14.

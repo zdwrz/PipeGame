@@ -1,6 +1,6 @@
 package dz.game.pipe.controller;
 
-import android.graphics.Point;
+import dz.game.pipe.model.Point;
 import dz.game.pipe.util.Constants;
 import dz.game.pipe.model.Pipe;
 
@@ -97,7 +97,111 @@ public class GameController {
         Pipe startPipe = placedPipesMap.get(midPoint);
         if(startPipe == null||startPipe.getType() == 1 || startPipe.getType() == 4 || startPipe.getType() == 5 || startPipe.getType() == 9){
         }else{
-            placedPipesMap.values();
+            checkMapForConnected();
+        }
+    }
+
+    public void checkMapForConnected() {
+        Pipe startP = placedPipesMap.get(Constants.GAME_COL_NUMBER/2);
+
+        check(startP);
+
+    }
+
+    public void checkLeft(Pipe left){
+        if(left != null){
+            if (left.getType() == 1 || left.getType() == 3
+                    || left.getType() == 4 || left.getType() == 6
+                    || left.getType() == 8 || left.getType() == 11) {
+                left.setConnected(true);
+            }
+            check(left);
+        }
+    }
+    public void checkRight(Pipe right){
+        if(right != null){
+            if (right.getType() == 1 || right.getType() == 3
+                    || right.getType() == 5 || right.getType() == 7
+                    || right.getType() == 9 || right.getType() == 10
+                    || right.getType() == 11) {
+                right.setConnected(true);
+            }
+            check(right);
+        }
+    }
+    public void checkUp(Pipe up){
+        if(up != null){
+            if(up.getType() == 2 ||up.getType() == 3
+                    ||up.getType() == 4 ||up.getType() == 5
+                    ||up.getType() == 8 ||up.getType() == 9
+                    ||up.getType() == 10 ){
+                up.setConnected(true);
+            }
+            check(up);
+        }
+    }
+    public void checkBottom(Pipe bottom){
+        if(bottom != null){
+            if(bottom.getType() == 2 ||bottom.getType() == 3
+                    ||bottom.getType() == 6 ||bottom.getType() == 7
+                    ||bottom.getType() == 8 ||bottom.getType() == 10
+                    ||bottom.getType() == 11){
+                bottom.setConnected(true);
+            }
+            check(bottom);
+        }
+    }
+    /** 11 types:
+     *  - | + ┏ ┓ ┗ ┛ ┣ ┳  ┫  ┻
+     *  1 2 3 4 5 6 7 8 9 10 11
+     */
+    public void check(Pipe p) {
+        if(p == null && p.isConnected()){
+            return;
+        }
+        Pipe right = placedPipesMap.get(p.getPosition().y*10 + p.getPosition().x+1);
+        Pipe left = placedPipesMap.get(p.getPosition().y*10 + p.getPosition().x-1);
+        Pipe bottom = placedPipesMap.get((p.getPosition().y+1)*10 + p.getPosition().x);
+        Pipe up = placedPipesMap.get((p.getPosition().y-1)*10 + p.getPosition().x);
+        if(p.getType() == 1){
+            checkLeft(left);
+            checkRight(right);
+        }else if(p.getType() == 2){
+            checkUp(up);
+            checkBottom(bottom);
+        }else if(p.getType() == 3){
+            checkRight(right);
+            checkLeft(left);
+            checkUp(up);
+            checkBottom(bottom);
+        }else if(p.getType() == 4){
+            checkRight(right);
+            checkBottom(bottom);
+        }else if(p.getType() == 5){
+            checkLeft(left);
+            checkBottom(bottom);
+        }else if(p.getType() == 6){
+            checkUp(up);
+            checkRight(right);
+        }else if(p.getType() == 7){
+            checkUp(up);
+            checkLeft(left);
+        }else if(p.getType() == 8){
+            checkUp(up);
+            checkRight(right);
+            checkBottom(bottom);
+        }else if(p.getType() == 9){
+            checkLeft(left);
+            checkRight(right);
+            checkBottom(bottom);
+        }else if(p.getType() == 10){
+            checkUp(up);
+            checkLeft(left);
+            checkBottom(bottom);
+        }else if(p.getType() == 11){
+            checkUp(up);
+            checkLeft(left);
+            checkRight(right);
         }
     }
 
@@ -115,4 +219,19 @@ public class GameController {
         return connectedPipes;
     }
 
+    public static void main(String[] s){
+        GameController gc = new GameController();
+        gc.start();
+
+        gc.placePipe(0,0);
+        gc.placePipe(0,1);
+        gc.placePipe(0,2);
+        gc.placePipe(0,3);
+        gc.placePipe(0,4);
+        gc.placePipe(0,5);
+        gc.placePipe(0,6);
+        gc.placePipe(0,7);
+        gc.checkGameStatus();
+
+    }
 }
