@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-        >
-    <Button
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:clickable="false" android:baselineAligned="false" android:gravity="center_vertical|center_horizontal">
+    <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_gravity="center"
+            android:id="@+id/imageStartButton"
+            android:src="@drawable/img_start_button" android:onClick="onClickStart"
+            android:contentDescription="image start button"
+            android:background="@android:color/transparent"
+            />
+    <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/start_button_label"
-            android:id="@+id/start_button" android:layout_gravity="center_horizontal"
-            android:onClick="onClickStart"/>
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/quit_button_label"
-            android:id="@+id/quit_button" android:layout_gravity="center_horizontal"
-            android:onClick="onClickQuit"/>
+            android:id="@+id/imageButtonQuit" android:layout_gravity="center"
+            android:src="@drawable/img_quit_button" android:onClick="onClickQuit"
+            android:background="@android:color/transparent"/>
 </LinearLayout>
 

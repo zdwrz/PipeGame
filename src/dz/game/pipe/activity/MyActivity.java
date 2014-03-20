@@ -2,8 +2,12 @@ package dz.game.pipe.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageButton;
 import dz.game.pipe.R;
 
 public class MyActivity extends Activity {
@@ -14,6 +18,34 @@ public class MyActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        ImageButton startButton = (ImageButton)findViewById(R.id.imageStartButton);
+        startButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent motionEvent) {
+                ImageButton imageButton = (ImageButton)v;
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    //grey color filter, you can change the color as you like
+                    imageButton.setColorFilter(Color.argb(155, 0, 160, 80));
+                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    imageButton.setColorFilter(Color.argb(0, 185, 185, 185));
+                }
+                return false;
+            }
+        });
+
+        ImageButton endButton = (ImageButton)findViewById(R.id.imageButtonQuit);
+        endButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent motionEvent) {
+                ImageButton imageButton = (ImageButton)v;
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    imageButton.setColorFilter(Color.argb(155, 160, 0, 80));
+                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    imageButton.setColorFilter(Color.argb(0, 185, 185, 185));
+                }
+                return false;
+            }
+        });
     }
 
     public void onClickQuit(View view) {
@@ -23,5 +55,8 @@ public class MyActivity extends Activity {
     public void onClickStart(View view) {
         Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
+    }
+
+    public void onClickRank(View view) {
     }
 }

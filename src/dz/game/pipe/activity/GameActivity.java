@@ -1,6 +1,8 @@
 package dz.game.pipe.activity;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -10,6 +12,7 @@ import dz.game.pipe.R;
 import dz.game.pipe.controller.GameController;
 import dz.game.pipe.model.Pipe;
 import dz.game.pipe.model.Point;
+import dz.game.pipe.model.Rank;
 import dz.game.pipe.util.Constants;
 import dz.game.pipe.util.GameUtil;
 
@@ -26,7 +29,7 @@ public class GameActivity extends Activity {
     CountDownTimer gameTimer;
     GameController gameControl;
     Map<Point, ImageView> imageMap;
-
+    Long secLeft = 0L;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game);
@@ -37,8 +40,8 @@ public class GameActivity extends Activity {
             TextView tv = (TextView) findViewById(R.id.timer_text);
             @Override
             public void onTick(long millisUntilFinished) {
-                Long secPassed = millisUntilFinished/1000;
-                tv.setText(secPassed/60 + ":" + secPassed%60);
+                secLeft = millisUntilFinished/1000;
+                tv.setText(secLeft/60 + ":" + secLeft%60);
             }
 
             @Override
@@ -79,6 +82,7 @@ public class GameActivity extends Activity {
         }
         ImageView preview1 = (ImageView)findViewById(R.id.preview_1);
         preview1.setImageBitmap(GameUtil.scalePipe(resID,this));
+       // GameUtil.ImageViewAnimatedChangeForPreview(getApplicationContext(),preview1,GameUtil.scalePipe(resID,this));
 
         resID = getResources().getIdentifier("dz.game.pipe:drawable/img_background", null, null);
         if(first4Pipes!= null && first4Pipes.size() > 1){
@@ -86,13 +90,16 @@ public class GameActivity extends Activity {
         }
         ImageView preview2 = (ImageView)findViewById(R.id.preview_2);
         preview2.setImageBitmap(GameUtil.scalePipe(resID,this));
+        //GameUtil.ImageViewAnimatedChangeForPreview(getApplicationContext(),preview2,GameUtil.scalePipe(resID,this));
 
         resID = getResources().getIdentifier("dz.game.pipe:drawable/img_background", null, null);
         if(first4Pipes!= null && first4Pipes.size() > 2){
             resID = getResources().getIdentifier("dz.game.pipe:drawable/img_pipe_" + first4Pipes.get(2).getType(), null, null);
         }
         ImageView preview3 = (ImageView)findViewById(R.id.preview_3);
-        preview3.setImageBitmap(GameUtil.scalePipe(resID,this));
+        //preview3.setImageBitmap(GameUtil.scalePipe(resID,this));
+        GameUtil.ImageViewAnimatedChangeForPreview(getApplicationContext(), preview3, GameUtil.scalePipe(resID, this));
+
     }
 
     View.OnClickListener clickListener = new View.OnClickListener() {
@@ -121,9 +128,18 @@ public class GameActivity extends Activity {
             ImageView image = imageMap.get(p);
             if(image != null){
                 int resID = getResources().getIdentifier("dz.game.pipe:drawable/img_pipe_water_" + cPipe.getType(), null, null);
-                image.setImageBitmap(GameUtil.scalePipe(resID, this));
+                GameUtil.ImageViewAnimatedChange(getApplicationContext(),image,GameUtil.scalePipe(resID,this));
             }
         }
+        Long secUsed =  TOTAL_GAME_TIME - secLeft;
+        int connectedPipeNum = gameControl.getConnectedPipes().size();
+        saveRank(secUsed,connectedPipeNum);
+    }
+
+    private void saveRank(Long secUsed, int connectedPipeNum) {
+        /*SharedPreferences pref = getApplicationContext().getSharedPreferences("dz.game.pipe", Context.MODE_PRIVATE);
+        String key = "dz.game.pipe.rank";
+        Map<Integer,Rank> rankMap = pref.getStringSet(key);*/
     }
 
     public void onClickReturn(View view) {
